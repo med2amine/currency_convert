@@ -1,0 +1,43 @@
+
+from requests import get
+from pprint import PrettyPrinter
+printer = PrettyPrinter()
+
+def rate_two_currencies(con_curr,to_conv_curr):
+    base_url = f'https://v6.exchangerate-api.com/v6/{api_key}/pair/{con_curr}/{to_conv_curr}'
+    response = get(base_url)
+    data = response.json()
+    print('your base currency is : ', con_curr)
+    print('the currency you are willing to convert to is : ',to_conv_curr)
+    print('the conversion rate is : ',data.get('conversion_rate'))
+    print('the last time update is : ',data.get('time_last_update_utc'))
+
+
+
+def amount_convert(amount,con_curr,to_con_curr):
+    base_url = f'https://v6.exchangerate-api.com/v6/{api_key}/pair/{con_curr}/{to_con_curr}/{amount}'
+    response = get(base_url)
+    data = response.json()
+    print('your base currency is : ',con_curr)
+    print('the currency you are willing to convert to is : ',to_con_curr)
+    print('the conversion rate is : ',data.get('conversion_rate'))
+    print('the converted amount is : ',data.get('conversion_result') ,to_con_curr)
+
+print('welcome to the currency convertor')
+cont = True
+while cont :
+    print('what we offer : conversion : conve / rate between two currencies : rate / quit : quit')
+    c = input('what do you want to do : ')
+    if c == 'conve':
+        amount = float(input('what is the amount you want to convert : '))
+        con_curr = input('what is your base currency : ').upper()
+        to_conv_curr = input('what is the currency you want to convert to : ').upper()
+        ac = amount_convert(amount,con_curr,to_conv_curr)
+
+    if c == 'rate':
+        con_curr = input('what is your base currency : ').upper()
+        to_conv_curr = input('what is the currency you want to convert to : ').upper()
+        rtc = rate_two_currencies(con_curr,to_conv_curr)
+    if c == 'quit':
+        print('thank you for using our programme')
+        cont = False
